@@ -9,17 +9,55 @@
 // * Use **semantic markup** for HTML and CSS (adhere to best practices)
 
 var gameBoard;
+var inPlay = true;
 var currentPlayer = 1;
 
 function getPlayers(){}
 
 function endGame(){}
 
-function isThereAWinner(){}
+function isThereAWinner(){
+  var tokens = [];
+  var lines = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+  ]
+  function checkLine(one, two, three){
+    if (tokens[one] && tokens[one] === tokens[two] && tokens[one] === tokens[three]){
+      gameBoard[one].className = "win";
+      gameBoard[two].className = "win";
+      gameBoard[three].className = "win";
+      inPlay = false;
+      return tokens[one];
+    } else {
+      return false;
+    }
+  }
+  //Extract tokens from the board and add them to tokens array for ease of checking
+  for (var i = 0; i < gameBoard.length; i++){
+    var token = gameBoard[i].innerHTML;
+    tokens.push(token);
+  }
+  for (i = 0; i < lines.length; i++){
+    var result = checkLine(lines[i][0], lines[i][1], lines[i][2]);
+    if (result){
+      console.log(result);
+      return result;
+    }
+  }
+  console.log(tokens);
+  return false;
+}
 
 function placeToken(){
   //Check that the cell is empty before allowing the player to place a token.
-  if (!event.target.innerHTML){
+  if (!event.target.innerHTML && inPlay){
     //Place the token of the current player then switch the player
     if (currentPlayer === 1){
       var x = document.createTextNode("X");
@@ -28,11 +66,15 @@ function placeToken(){
       var o = document.createTextNode("O");
       event.target.appendChild(o);
     }
-    switchPlayer();
+    //Check end game condition
+    var win = isThereAWinner();
+    if (win){
+      endGame(win);
+    } else {
+      switchPlayer();
+    }
   }
 }
-
-function updateBoard(){}
 
 function switchPlayer(){
   if (currentPlayer === 1){
@@ -46,6 +88,7 @@ function resetBoard(){
   for (var i = 0; i < gameBoard.length; i++){
     gameBoard[i].innerHTML = "";
   }
+  inPlay = true;
 }
 
 window.onload = function(){
