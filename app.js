@@ -114,7 +114,42 @@ function getValues(){
 
 function pickCell(){
   var tokens = getValues();
-  for (var i = 0; i < tokens.length; i++){
+  var opponent = false;
+  function canLineWin(one, two, three){
+    var placed = 0;
+    for (var i = 0; i < arguments.length; i++){
+      if (tokens[arguments[i]]){
+        placed++;
+      }
+    }
+    //If line is full already, line can be ignored
+    if (placed === 3){
+      return false;
+    }
+    if (placed === 2){
+      //If line has two matching tokens and one gap, line must be filled
+      if (tokens[one] === tokens[two] || tokens[one] === tokens[three] || tokens[two] === tokens[three]){
+        if (!tokens[one]){
+          return one;
+        } else if (!tokens[two]){
+          return two;
+        } else {
+          return three;
+        }
+      }
+      //If line has mismatched tokens, even with gaps, line can be ignored
+      if (tokens[one] !== tokens[two] && tokens[one] !== tokens[three] && tokens[two] !== tokens[three]){
+        return false;
+      }
+    }
+  }
+  for (var i = 0; i < lines.length; i++){
+    var place = canLineWin(lines[i][0], lines[i][1], lines[i][2]);
+    if (place){
+      return place;
+    }
+  }
+  for (i = 0; i < tokens.length; i++){
     if (!tokens[i]){
       return i;
     }
