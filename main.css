@@ -14,7 +14,7 @@ h1 {
     border: 2px solid brown;
     margin: 0 auto;
 }
-.cell, .win {
+.cell, .filled, .win {
     border: 2px solid brown;
     width: 5rem;
     height: 5rem;
@@ -24,6 +24,10 @@ h1 {
     box-sizing: border-box;
     font-size: 4rem;
     text-align: center;
+}
+
+.cell:hover {
+  background-color: palegreen;
 }
 
 .win {

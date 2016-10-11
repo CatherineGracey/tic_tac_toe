@@ -96,6 +96,7 @@ function placeToken(){
       var o = document.createTextNode("O");
       event.target.appendChild(o);
     }
+    event.target.className = "filled";
     //Check end game condition
     var win = isThereAWinner();
     if (win){
