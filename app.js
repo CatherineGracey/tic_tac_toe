@@ -1,9 +1,18 @@
 var gameBoard;
-var inPlay = true;
+var inPlay = false;
 var currentPlayer = 1;
 var scores = [0, 0];
+var playBot = false;
 
-function getPlayers(){}
+function getPlayers(event){
+  inPlay = true;
+  if (event.target.id === "one-player"){
+    playBot = true;
+  } else {
+    playBot = false;
+  }
+  document.getElementById("select-players").style.display = "none";
+}
 
 function endGame(result){
   inPlay = false;
@@ -17,6 +26,8 @@ function endGame(result){
   if (result){
     if (result === "X"){
       text = "Player One has won.";
+    } else if (playBot){
+      text = "The computer player has won.";
     } else {
       text = "Player Two has won.";
     }
@@ -85,32 +96,51 @@ function isThereAWinner(){
   return false;
 }
 
-function placeToken(){
-  //Check that the cell is empty before allowing the player to place a token.
-  if (!event.target.innerHTML && inPlay){
-    //Place the token of the current player then switch the player
-    if (currentPlayer === 1){
-      var x = document.createTextNode("X");
-      event.target.appendChild(x);
-    } else {
+function checkEndGame(){
+  //Check end game condition
+  var win = isThereAWinner();
+  if (win){
+    endGame(win);
+  } else {
+    isBoardFull();
+  }
+  switchPlayer();
+}
+
+function placeToken(ai){
+  //Only place tokens if the game is in play
+  if (inPlay){
+    //Check that the cell is empty before allowing the player to place a token.
+    if (ai === "AI"){
       var o = document.createTextNode("O");
-      event.target.appendChild(o);
+      for (var i = 0; i < gameBoard.length; i++){
+        if (!gameBoard[i].innerHTML){
+          gameBoard[i].appendChild(o);
+          break;
+        }
+      }
+      checkEndGame();
+    } else if (!event.target.innerHTML){
+      //Place the token of the current player then switch the player
+      if (currentPlayer === 1){
+        var x = document.createTextNode("X");
+        event.target.appendChild(x);
+      } else {
+        var o = document.createTextNode("O");
+        event.target.appendChild(o);
+      }
+      event.target.className = "filled";
+      checkEndGame();
     }
-    event.target.className = "filled";
-    //Check end game condition
-    var win = isThereAWinner();
-    if (win){
-      endGame(win);
-    } else {
-      isBoardFull();
-    }
-    switchPlayer();
   }
 }
 
 function switchPlayer(){
   if (currentPlayer === 1){
     currentPlayer = 2;
+    if (playBot){
+      placeToken("AI");
+    }
   } else {
     currentPlayer = 1;
   }
@@ -124,6 +154,9 @@ function resetBoard(){
   inPlay = true;
   var resultDiv = document.getElementsByClassName("result")[0];
   resultDiv.parentNode.removeChild(resultDiv);
+  if (playBot && currentPlayer === 2){
+    placeToken("AI");
+  }
 }
 
 window.onload = function(){
@@ -132,4 +165,6 @@ window.onload = function(){
   gameBoard.addEventListener("click", placeToken);
   //Assign cells to global variable
   gameBoard = gameBoard.children;
+  //Get second player type
+  document.getElementById("select-players").addEventListener("click", getPlayers);
 };
