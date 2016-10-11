@@ -1,0 +1,24 @@
+body {
+    max-width: 40em;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+#board {
+    width: 15rem;
+    height: 15rem;
+    font-size: 0;
+    border: 2px solid brown;
+    margin: 0 auto;
+}
+.cell {
+    border: 2px solid brown;
+    width: 5rem;
+    height: 5rem;
+    display: inline-block;
+    margin: 0;
+    box-sizing: border-box;
+}
