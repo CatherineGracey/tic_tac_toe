@@ -14,7 +14,40 @@ var currentPlayer = 1;
 
 function getPlayers(){}
 
-function endGame(){}
+function endGame(result){
+  console.log("game over");
+  inPlay = false;
+  var resultDiv = document.createElement("div");
+  resultDiv.className = "result";
+  var replayButton = document.createElement("button");
+  var buttonText = document.createTextNode("Replay");
+  replayButton.appendChild(buttonText);
+  replayButton.addEventListener("click", resetBoard);
+  var text;
+  console.log(result);
+  if (result){
+    text = "Player " + result + " has won.";
+  } else {
+    text = "Close match, but no winner."
+  }
+  var resultText = document.createTextNode(text);
+  resultDiv.appendChild(resultText);
+  resultDiv.appendChild(replayButton);
+  document.body.appendChild(resultDiv);
+}
+
+function isBoardFull(){
+  var full = true;
+  for (var i = 0; i < gameBoard.length; i++){
+    if (gameBoard[i].innerHTML === ""){
+      full = false;
+      break;
+    }
+  }
+  if (full){
+    endGame(false);
+  }
+}
 
 function isThereAWinner(){
   var tokens = [];
@@ -33,7 +66,7 @@ function isThereAWinner(){
       gameBoard[one].className = "win";
       gameBoard[two].className = "win";
       gameBoard[three].className = "win";
-      inPlay = false;
+      console.log(tokens[one]);
       return tokens[one];
     } else {
       return false;
@@ -71,8 +104,9 @@ function placeToken(){
     if (win){
       endGame(win);
     } else {
-      switchPlayer();
+      isBoardFull();
     }
+    switchPlayer();
   }
 }
 
@@ -87,8 +121,11 @@ function switchPlayer(){
 function resetBoard(){
   for (var i = 0; i < gameBoard.length; i++){
     gameBoard[i].innerHTML = "";
+    gameBoard[i].className = "cell";
   }
   inPlay = true;
+  var resultDiv = document.getElementsByClassName("result")[0];
+  resultDiv.parentNode.removeChild(resultDiv);
 }
 
 window.onload = function(){

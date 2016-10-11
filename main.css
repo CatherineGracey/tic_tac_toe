@@ -14,11 +14,18 @@ h1 {
     border: 2px solid brown;
     margin: 0 auto;
 }
-.cell {
+.cell, .win {
     border: 2px solid brown;
     width: 5rem;
     height: 5rem;
-    display: inline-block;
+    display: block;
+    float: left;
     margin: 0;
     box-sizing: border-box;
+    font-size: 4rem;
+    text-align: center;
+}
+
+.win {
+  color: green;
 }
