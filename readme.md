@@ -2,10 +2,13 @@
 ##By Catherine Gracey
 
 ###Overview
+
 Tic Tac Toe, also known as Naughts and Crosses, is a popular game where players take alternating turns to place their token, either an "O" for Naughts or "X" for Crosses. The objective of the game is to complete a line of your own tokens while blocking the other player from forming a line. Lines can be horizontal, vertical, or diagonal. The standard board layout is a 3 x 3 grid.
 
 ###Approach
+
 This project was divided into three sections:
+
 - Technical Requirements
 - Necessary Deliverables
 - Bonus
@@ -13,7 +16,9 @@ This project was divided into three sections:
 I approached this project by completing each section in order, while also keeping an eye on future requirements so that I would not code something that went against the ultimate aim of the program.
 
 ####Technical Requirements
+
 The technical requirements of the project required the app to:
+
 1. **Render a game in the browser**
 2. **Switch turns** between two players
 3. **Design logic for winning** & **visually display which player won**
@@ -34,6 +39,7 @@ The second area of functionality that I wrote was to detect if a player had won 
 DOM manipulation is done via vanilla JS, because the app is not complex enough to warrant the inclusion of a large library such as jQuery (requirement 6). I have refactored code after completing each function, so that it remains simple and clear with appropriate comments (requirement 5), and have kept HTML and CSS code as simple as possible for ease of reading (requirement 8).
 
 ### Necessary Deliverables
+
 1. A **working game, built by you**, hosted somewhere on the internet
 2. A **link to your hosted working game** in the URL section of your GitHub repo
 3. A **git repository hosted on GitHub**, with a link to your hosted game, and frequent commits dating back to the very beginning of the project
@@ -42,6 +48,7 @@ DOM manipulation is done via vanilla JS, because the app is not complex enough t
 To complete the necessary deliverables, I began by creating a GitHub repo and linking it to my local repo. At each commit I pushed it to GitHub, so that my most recent version would always be available online (requirements 1 and 3). I then created a GitHub Page for the repo and put the link into the URL space on the GitHub repo site (requirement 2).
 
 ### Bonus
+
 1. Use timers to display "waiting..." messages while users are waiting to be matched
 2. Keep track of multiple game rounds with a win counter
 3. Allow game customizable options, time limits, board size, game rounds, name & profiles etc  
@@ -53,6 +60,9 @@ To complete the necessary deliverables, I began by creating a GitHub repo and li
 Because the bonus tasks were for extra credit and not part of the core requirements, I decided to include some features but otherwise develop my app in a different direction to the one suggested.
 
 ####Included Suggested Features
+
 I liked the idea of keeping track of mutliple games, so I added a counter that displays above the board (suggestion 2).
 
 ####Included Additional Features
+
+I wanted to add the option of a computer player. I began developing this feature by allowing the user to select between a single player or two player game. If a single player game is chosen, the playBot variable is set to true and the computer automatically takes a turn. For the first version of playBot, the computer's token was placed in the first empty cell, which made it very easy for the human player to predict playBot's next move.

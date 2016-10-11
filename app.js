@@ -3,6 +3,16 @@ var inPlay = false;
 var currentPlayer = 1;
 var scores = [0, 0];
 var playBot = false;
+var lines = [
+  [0,1,2],
+  [3,4,5],
+  [6,7,8],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8],
+  [0,4,8],
+  [2,4,6]
+];
 
 function getPlayers(event){
   inPlay = true;
@@ -56,17 +66,7 @@ function isBoardFull(){
 }
 
 function isThereAWinner(){
-  var tokens = [];
-  var lines = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6]
-  ]
+  var tokens = getValues();
   function checkLine(one, two, three){
     if (tokens[one] && tokens[one] === tokens[two] && tokens[one] === tokens[three]){
       gameBoard[one].className = "win";
@@ -76,11 +76,6 @@ function isThereAWinner(){
     } else {
       return false;
     }
-  }
-  //Extract tokens from the board and add them to tokens array for ease of checking
-  for (var i = 0; i < gameBoard.length; i++){
-    var token = gameBoard[i].innerHTML;
-    tokens.push(token);
   }
   for (i = 0; i < lines.length; i++){
     var result = checkLine(lines[i][0], lines[i][1], lines[i][2]);
@@ -107,18 +102,33 @@ function checkEndGame(){
   switchPlayer();
 }
 
+function getValues(){
+  var tokens = [];
+  //Extract tokens from the board and add them to tokens array for ease of checking
+  for (var i = 0; i < gameBoard.length; i++){
+    var token = gameBoard[i].innerHTML;
+    tokens.push(token);
+  }
+  return tokens;
+}
+
+function pickCell(){
+  var tokens = getValues();
+  for (var i = 0; i < tokens.length; i++){
+    if (!tokens[i]){
+      return i;
+    }
+  }
+}
+
 function placeToken(ai){
   //Only place tokens if the game is in play
   if (inPlay){
     //Check that the cell is empty before allowing the player to place a token.
     if (ai === "AI"){
       var o = document.createTextNode("O");
-      for (var i = 0; i < gameBoard.length; i++){
-        if (!gameBoard[i].innerHTML){
-          gameBoard[i].appendChild(o);
-          break;
-        }
-      }
+      var cell = pickCell();
+      gameBoard[cell].appendChild(o);
       checkEndGame();
     } else if (!event.target.innerHTML){
       //Place the token of the current player then switch the player
