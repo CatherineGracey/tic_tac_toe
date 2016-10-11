@@ -9,6 +9,7 @@ This project was divided into three sections:
 - Technical Requirements
 - Necessary Deliverables
 - Bonus
+
 I approached this project by completing each section in order, while also keeping an eye on future requirements so that I would not code something that went against the ultimate aim of the program.
 
 ####Technical Requirements
@@ -23,9 +24,13 @@ The technical requirements of the project required the app to:
 8. Use **semantic markup** for HTML and CSS (adhere to best practices)
 
 I began by initialising the repository and setting up the file structure and boilerplate code to satisfy requirements 4 and 7 via GitHub.
+
 Once the boilerplate code was created, I setup a preliminary board with HTML and CSS, so that I could wireframe the project directly on the page. In the JS file I wrote out an empty function for every task I could imagine the app would need to perform, and created a global variable for everything that the app would need to keep track of. This ensured my development was closely tied to the interface, to satisfy requirement 1.
+
 The first functionality that I added to the site was placing alternating tokens of X and O on the board, and tracking which player's turn it is. Token placement was tracked via the content of the cells on the board, and player turn via a global variable. This was to meet requirement 2.
+
 The second area of functionality that I wrote was to detect if a player had won the game, as per requirement 3. This naturally led into the next area of detecting if a game was over without a win. Once games are finished, a function is called to display the result to the player(s) and prompt them to play again.
+
 DOM manipulation is done via vanilla JS, because the app is not complex enough to warrant the inclusion of a large library such as jQuery (requirement 6). I have refactored code after completing each function, so that it remains simple and clear with appropriate comments (requirement 5), and have kept HTML and CSS code as simple as possible for ease of reading (requirement 8).
 
 ### Necessary Deliverables
@@ -45,4 +50,9 @@ To complete the necessary deliverables, I began by creating a GitHub repo and li
 6. Use **LocalStorage** or **SessionStorage** to persist data locally to allow games to continue after page refresh or loss of internet connectivity
 7. Be creative! Bend the rules and give it a twist!
 
-Because the bonus tasks were for extra credit and not part of the core requirements, I decided to develop my app in a different direction to the one suggested.
+Because the bonus tasks were for extra credit and not part of the core requirements, I decided to include some features but otherwise develop my app in a different direction to the one suggested.
+
+####Included Suggested Features
+I liked the idea of keeping track of mutliple games, so I added a counter that displays above the board (suggestion 2).
+
+####Included Additional Features

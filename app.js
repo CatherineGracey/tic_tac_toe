@@ -1,21 +1,11 @@
-//Base requirements
-// * **Render a game in the browser**
-// * **Switch turns** between two players
-// * **Design logic for winning** & **visually display which player won**
-// * **Include separate HTML / CSS / JavaScript files**
-// * Stick with **KISS (Keep It Simple Stupid)** and **DRY (Don't Repeat Yourself)** principles
-// * Use **Javascript or jQuery** for **DOM manipulation**
-// * **Deploy your game online**, where the rest of the world can access it
-// * Use **semantic markup** for HTML and CSS (adhere to best practices)
-
 var gameBoard;
 var inPlay = true;
 var currentPlayer = 1;
+var scores = [0, 0];
 
 function getPlayers(){}
 
 function endGame(result){
-  console.log("game over");
   inPlay = false;
   var resultDiv = document.createElement("div");
   resultDiv.className = "result";
@@ -24,9 +14,12 @@ function endGame(result){
   replayButton.appendChild(buttonText);
   replayButton.addEventListener("click", resetBoard);
   var text;
-  console.log(result);
   if (result){
-    text = "Player " + result + " has won.";
+    if (result === "X"){
+      text = "Player One has won.";
+    } else {
+      text = "Player Two has won.";
+    }
   } else {
     text = "Close match, but no winner."
   }
@@ -34,6 +27,8 @@ function endGame(result){
   resultDiv.appendChild(resultText);
   resultDiv.appendChild(replayButton);
   document.body.appendChild(resultDiv);
+  document.getElementById("player-one").innerHTML = scores[0];
+  document.getElementById("player-two").innerHTML = scores[1];
 }
 
 function isBoardFull(){
@@ -66,7 +61,6 @@ function isThereAWinner(){
       gameBoard[one].className = "win";
       gameBoard[two].className = "win";
       gameBoard[three].className = "win";
-      console.log(tokens[one]);
       return tokens[one];
     } else {
       return false;
@@ -80,11 +74,14 @@ function isThereAWinner(){
   for (i = 0; i < lines.length; i++){
     var result = checkLine(lines[i][0], lines[i][1], lines[i][2]);
     if (result){
-      console.log(result);
+      if (result === "X"){
+        scores[0]++
+      } else {
+        scores[1]++;
+      }
       return result;
     }
   }
-  console.log(tokens);
   return false;
 }
 
@@ -135,12 +132,3 @@ window.onload = function(){
   //Assign cells to global variable
   gameBoard = gameBoard.children;
 };
-
-//Bonus functionality
-// Use timers to display "waiting..." messages while users are waiting to be matched
-// Keep track of multiple game rounds with a win counter
-// Allow game customizable options, time limits, board size, game rounds, name & profiles etc
-// Allow players to customize their token (X, O, name, picture, avatar etc)
-// Get inventive with your styling ** use CSS effects, animations or HTML canvas API to spiff things up
-// Use LocalStorage or SessionStorage to persist data locally to allow games to continue after page refresh or loss of internet connectivity
-// Be creative! Bend the rules and give it a twist!
