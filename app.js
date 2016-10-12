@@ -40,14 +40,14 @@ function endGame(result){
   var text;
   if (result){
     if (result === xToken){
-      text = "Player One has won.";
+      text = "Player One has eaten Player Two.";
     } else if (playBot){
-      text = "The computer player has won.";
+      text = "The computer player has slain you.";
     } else {
-      text = "Player Two has won.";
+      text = "Player Two has slain Player One.";
     }
   } else {
-    text = "Close match, but no winner."
+    text = "Everyone lives to fight another day."
   }
   var resultText = document.createTextNode(text);
   resultDiv.appendChild(resultText);
