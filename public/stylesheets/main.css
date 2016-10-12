@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-  background-image: url("images/castle-928557.jpg");
+  background-image: url("../images/castle-928557.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
