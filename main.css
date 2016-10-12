@@ -1,13 +1,13 @@
 html, body {
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }
 
 body {
   background-image: url("images/castle-928557.jpg");
-  background-size: fill;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: white;
@@ -16,9 +16,9 @@ body {
 
 .wrapper {
     max-width: 40em;
-    margin: 1em auto;
+    margin: auto;
     font-family: sans-serif;
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.75);
     padding: 5%;
 }
 
@@ -27,8 +27,8 @@ header {
 }
 
 header img {
-  max-width: 75px;
-  max-height: 75px;
+  max-width: 5rem;
+  max-height: 5rem;
   float: left;
   padding: 5px;
 }
@@ -50,8 +50,9 @@ h1 {
   display: none;
 }
 
-.scores span {
+.score {
   font-weight: bold;
+  font-size: 1.15em;
 }
 
 .scores img {
@@ -99,4 +100,43 @@ img {
 
 .win {
   border-color: #57a957;
+}
+
+@media (min-width: 25rem){
+  .player {
+    display: inline-block;
+    min-width: 40%;
+  }
+}
+
+@media (min-height: 40rem){
+  .wrapper {
+    margin: 1rem auto;
+  }
+}
+
+@media (min-width: 30rem){
+  #board {
+    width: 18rem;
+    height: 18rem;
+    border-width: 3px;
+  }
+  .cell, .filled, .win {
+    width: 6rem;
+    height: 6rem;
+    border-width: 3px;
+  }
+}
+
+@media (min-width: 40rem){
+  #board {
+    width: 19.5rem;
+    height: 19.5rem;
+    border-width: 4px;
+  }
+  .cell, .filled, .win {
+    width: 6.5rem;
+    height: 6.5rem;
+    border-width: 4px;
+  }
 }
