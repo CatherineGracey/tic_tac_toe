@@ -197,6 +197,7 @@ function placeToken(ai){
       var o = document.createTextNode("O");
       var cell = pickCell();
       gameBoard[cell].appendChild(o);
+      gameBoard[cell].className = "filled";
       checkEndGame();
     } else if (!event.target.innerHTML){
       //Place the token of the current player then switch the player
