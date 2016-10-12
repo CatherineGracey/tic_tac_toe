@@ -11,19 +11,18 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   color: white;
+  text-align: center;
 }
 
 .wrapper {
     max-width: 40em;
-    margin: auto;
+    margin: 1em auto;
     font-family: sans-serif;
     background: rgba(0,0,0,.5);
     padding: 5%;
-    transform: translateY(20%);
 }
 
 header {
-  text-align: center;
   overflow: auto;
 }
 
@@ -43,13 +42,8 @@ h1 {
     display: inline-block;
 }
 
-main {
-
-}
-
 .players {
   margin: 1rem;
-  text-align: center;
 }
 
 .scores {
@@ -58,6 +52,11 @@ main {
 
 .scores span {
   font-weight: bold;
+}
+
+.scores img {
+  max-width: 2em;
+  max-height: 2em;
 }
 
 button {
@@ -99,5 +98,5 @@ img {
 }
 
 .win {
-  color: green;
+  border-color: #57a957;
 }
