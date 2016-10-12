@@ -115,6 +115,7 @@ function getValues(){
 function pickCell(){
   var tokens = getValues();
   var opponent = false;
+  var potentialLines = [];
   function canLineWin(one, two, three){
     var placed = 0;
     for (var i = 0; i < arguments.length; i++){
@@ -129,26 +130,58 @@ function pickCell(){
     if (placed === 2){
       //If line has two matching tokens and one gap, line must be filled
       if (tokens[one] === tokens[two] || tokens[one] === tokens[three] || tokens[two] === tokens[three]){
-        if (!tokens[one]){
-          return one;
-        } else if (!tokens[two]){
-          return two;
+        //Is this playBot's line or the human player's line?
+        if (tokens[one] === "X" || tokens[one] === "X" || tokens[two] === "X"){
+          //Save the opponent's winning line in the variable but keep checking other lines.
+          if (!tokens[one]){
+            opponent = one;
+          } else if (!tokens[two]){
+            opponent = two;
+          } else {
+            opponent = three;
+          }
+          return false;
         } else {
-          return three;
+          //PlayBot can win, so return the winning location.
+          if (!tokens[one]){
+            return one;
+          } else if (!tokens[two]){
+            return two;
+          } else {
+            return three;
+          }
         }
       }
       //If line has mismatched tokens, even with gaps, line can be ignored
-      if (tokens[one] !== tokens[two] && tokens[one] !== tokens[three] && tokens[two] !== tokens[three]){
+      else if (tokens[one] !== tokens[two] && tokens[one] !== tokens[three] && tokens[two] !== tokens[three]){
         return false;
       }
     }
+    //Line is not an obvious choice, but has potential
+    if (tokens[one] !== "X" && tokens[two] !== "X" && tokens[three] !== "X"){
+      potentialLines.push(arguments);
+    }
   }
+  //Loop through lines to see if there is a potential winning line.
   for (var i = 0; i < lines.length; i++){
     var place = canLineWin(lines[i][0], lines[i][1], lines[i][2]);
     if (place){
       return place;
     }
   }
+  //If the opponent can win, block them.
+  if (opponent){
+    return opponent;
+  }
+  for (i = 0; i < potentialLines.length; i++){
+    for (var j = 0; j < potentialLines[i].length; j++){
+      var cell = potentialLines[i][j];
+      if (!tokens[cell]){
+        return cell;
+      }
+    }
+  }
+  //No obvious line, so place token in the first free position.
   for (i = 0; i < tokens.length; i++){
     if (!tokens[i]){
       return i;
