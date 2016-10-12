@@ -3,6 +3,10 @@ var inPlay = false;
 var currentPlayer = 1;
 var scores = [0, 0];
 var playBot = false;
+//X image source: https://pixabay.com/en/dragon-green-chinese-winged-animal-29761/
+var xToken = '<img src="images/dragon-29761.svg" alt="X">';
+//O image source: https://pixabay.com/en/knight-sword-armed-shield-combat-156986/
+var oToken = '<img src="images/knight-156986.svg" alt="O">';
 var lines = [
   [0,1,2],
   [3,4,5],
@@ -34,7 +38,7 @@ function endGame(result){
   replayButton.addEventListener("click", resetBoard);
   var text;
   if (result){
-    if (result === "X"){
+    if (result === xToken){
       text = "Player One has won.";
     } else if (playBot){
       text = "The computer player has won.";
@@ -80,7 +84,7 @@ function isThereAWinner(){
   for (i = 0; i < lines.length; i++){
     var result = checkLine(lines[i][0], lines[i][1], lines[i][2]);
     if (result){
-      if (result === "X"){
+      if (result === xToken){
         scores[0]++
       } else {
         scores[1]++;
@@ -131,7 +135,7 @@ function pickCell(){
       //If line has two matching tokens and one gap, line must be filled
       if (tokens[one] === tokens[two] || tokens[one] === tokens[three] || tokens[two] === tokens[three]){
         //Is this playBot's line or the human player's line?
-        if (tokens[one] === "X" || tokens[one] === "X" || tokens[two] === "X"){
+        if (tokens[one] === xToken || tokens[one] === xToken || tokens[two] === xToken){
           //Save the opponent's winning line in the variable but keep checking other lines.
           if (!tokens[one]){
             opponent = one;
@@ -158,7 +162,7 @@ function pickCell(){
       }
     }
     //Line is not an obvious choice, but has potential
-    if (tokens[one] !== "X" && tokens[two] !== "X" && tokens[three] !== "X"){
+    if (tokens[one] !== xToken && tokens[two] !== xToken && tokens[three] !== xToken){
       potentialLines.push(arguments);
     }
   }
@@ -194,19 +198,16 @@ function placeToken(ai){
   if (inPlay){
     //Check that the cell is empty before allowing the player to place a token.
     if (ai === "AI"){
-      var o = document.createTextNode("O");
       var cell = pickCell();
-      gameBoard[cell].appendChild(o);
+      gameBoard[cell].innerHTML = oToken;
       gameBoard[cell].className = "filled";
       checkEndGame();
     } else if (!event.target.innerHTML){
       //Place the token of the current player then switch the player
       if (currentPlayer === 1){
-        var x = document.createTextNode("X");
-        event.target.appendChild(x);
+        event.target.innerHTML = xToken;
       } else {
-        var o = document.createTextNode("O");
-        event.target.appendChild(o);
+        event.target.innerHTML = oToken;
       }
       event.target.className = "filled";
       checkEndGame();
