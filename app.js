@@ -203,7 +203,7 @@ function placeToken(ai){
       gameBoard[cell].innerHTML = oToken;
       gameBoard[cell].className = "filled";
       checkEndGame();
-    } else if (!event.target.innerHTML){
+    } else if (event.target.className === "cell"){
       //Place the token of the current player then switch the player
       if (currentPlayer === 1){
         event.target.innerHTML = xToken;
