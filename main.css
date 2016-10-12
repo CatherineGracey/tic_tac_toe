@@ -102,16 +102,27 @@ img {
   border-color: #57a957;
 }
 
+@keyframes placeToken {
+  from {
+    max-height: 0;
+    max-width: 0;
+  }
+  to {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+.filled img {
+  animation-name: placeToken;
+  animation-duration: .5s;
+  margin: auto;
+}
+
 @media (min-width: 25rem){
   .player {
     display: inline-block;
     min-width: 40%;
-  }
-}
-
-@media (min-height: 40rem){
-  .wrapper {
-    margin: 1rem auto;
   }
 }
 
@@ -138,5 +149,20 @@ img {
     width: 6.5rem;
     height: 6.5rem;
     border-width: 4px;
+  }
+}
+
+@media (min-height: 35rem){
+  .wrapper {
+    margin: 1rem auto;
+  }
+}
+
+@media (min-height: 40rem){
+  .wrapper {
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
