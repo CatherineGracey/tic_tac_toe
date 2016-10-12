@@ -1,15 +1,46 @@
+html, body {
+  height: 100%;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+}
+
 body {
+  background-image: url("images/castle-928557.jpg");
+  background-size: fill;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.wrapper {
     max-width: 40em;
-    margin: 0 auto;
+    margin: auto;
     font-family: sans-serif;
+    background: rgba(0,0,0,.5);
+    padding: 5%;
+    transform: translateY(20%);
 }
 
 header {
+  text-align: center;
+  overflow: auto;
+}
 
+header img {
+  max-width: 75px;
+  max-height: 75px;
+  float: left;
+  padding: 5px;
+}
+
+header img:first-child {
+  float: right;
 }
 
 h1 {
-    text-align: center;
+
+    display: inline-block;
 }
 
 main {
@@ -18,14 +49,24 @@ main {
 
 .players {
   margin: 1rem;
+  text-align: center;
 }
 
 .scores {
-
+  display: none;
 }
 
 .scores span {
+  font-weight: bold;
+}
 
+button {
+  background-color: #4F4333;
+  color: white;
+  border: 1px solid #2C3921;
+  padding: 5px;
+  margin: 5px;
+  font-size: 1.2rem;
 }
 
 img {
@@ -37,11 +78,12 @@ img {
     width: 15rem;
     height: 15rem;
     font-size: 0;
-    border: 2px solid brown;
-    margin: 0 auto;
+    border: 2px solid #4F4333;
+    margin: 5% auto;
+    background-color: #fff;
 }
 .cell, .filled, .win {
-    border: 2px solid brown;
+    border: 2px solid #4F4333;
     width: 5rem;
     height: 5rem;
     display: block;
@@ -53,7 +95,7 @@ img {
 }
 
 .cell:hover {
-  background-color: palegreen;
+  background-color: #2C3921;
 }
 
 .win {

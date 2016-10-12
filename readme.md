@@ -61,7 +61,9 @@ Because the bonus tasks were for extra credit and not part of the core requireme
 
 ####Included Suggested Features
 
-I liked the idea of keeping track of mutliple games, so I added a counter that displays above the board (suggestion 2).
+I liked the idea of keeping track of the score over mutliple games, so I added a counter that displays above the board (suggestion 2).
+
+Customised tokens sounded like a good idea but, by changing this myself and not giving control to the player, I am able to use the customised tokens to create a theme for the game. After browsing through several pages of tic tac toe games on google images, I didn't find any with dragons and knights, I chose that as my theme.
 
 ####Included Additional Features
 

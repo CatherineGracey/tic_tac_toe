@@ -26,6 +26,7 @@ function getPlayers(event){
     playBot = false;
   }
   document.getElementById("select-players").style.display = "none";
+  document.getElementsByClassName("scores")[0].style.display = "block";
 }
 
 function endGame(result){
@@ -51,7 +52,7 @@ function endGame(result){
   var resultText = document.createTextNode(text);
   resultDiv.appendChild(resultText);
   resultDiv.appendChild(replayButton);
-  document.body.appendChild(resultDiv);
+  document.getElementsByClassName("wrapper")[0].appendChild(resultDiv);
   document.getElementById("player-one").innerHTML = scores[0];
   document.getElementById("player-two").innerHTML = scores[1];
 }
