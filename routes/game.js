@@ -1,5 +1,6 @@
 var xToken = 'X';
 var oToken = 'O';
+//Array of all vertical, horizontal and diagonal lines on the board by array index.
 var lines = [
   [0,1,2],
   [3,4,5],
@@ -12,6 +13,7 @@ var lines = [
 ];
 
 function isBoardFull(tokens){
+  //Check if there is a token on every square of the board.
   for (var i = 0; i < tokens.length; i++){
     if (tokens[i] === ""){
       return false;
@@ -28,7 +30,8 @@ function isThereAWinner(tokens){
       return false;
     }
   }
-  for (i = 0; i < lines.length; i++){
+  //Loop through all lines and see if any meet the winning condition.
+  for (var i = 0; i < lines.length; i++){
     var result = checkLine(lines[i][0], lines[i][1], lines[i][2]);
     if (result){
       return true;
@@ -105,6 +108,7 @@ function pickCell(tokens){
   if (opponent){
     return opponent;
   }
+  //Loop through lines that could still have good placements, and place a token.
   for (i = 0; i < potentialLines.length; i++){
     for (var j = 0; j < potentialLines[i].length; j++){
       var cell = potentialLines[i][j];
@@ -122,9 +126,6 @@ function pickCell(tokens){
 }
 
 function processGame(data){
-  console.log("gameUpdate", data);
-  console.log(data.currentPlayer);
-  console.log(checkEndGame(data.tokens))
   if (data.currentPlayer === 2 && !checkEndGame(data.tokens)){
     var cell = pickCell(data.tokens);
     data.tokens[cell] = "O";
