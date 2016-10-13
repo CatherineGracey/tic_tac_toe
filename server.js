@@ -34,7 +34,7 @@ io.on('connection', function(socket){
   });
   socket.on("gameUpdate", function(data){
     var updatedGame = game.processGame(data);
-    io.emit("gameUpdate", updatedGame);
+    socket.emit("gameUpdate", updatedGame);
   });
 });
 

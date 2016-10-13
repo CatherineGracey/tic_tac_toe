@@ -51,24 +51,9 @@ function sendToServer(){
       tokens[i] = "O";
     }
   }
-  if (!checkEndGame()){
-    currentPlayer = 2;
-  }
   socket.emit("gameUpdate", {tokens: tokens, currentPlayer: currentPlayer});
   console.log(currentPlayer);
 }
-
-// function getPlayers(event){
-//   inPlay = true;
-//   if (event.target.id === "one-player"){
-//     playBot = true;
-//   } else {
-//     playBot = false;
-//   }
-//   sendToServer();
-//   document.getElementById("select-players").style.display = "none";
-//   document.getElementsByClassName("scores")[0].style.display = "block";
-// }
 
 function endGame(result){
   inPlay = false;
@@ -152,12 +137,6 @@ function placeToken(event){
   //Only place tokens if the game is in play
   if (inPlay && currentPlayer === 1){
     //Check that the cell is empty before allowing the player to place a token.
-    // if (ai === "AI"){
-    //   var cell = pickCell();
-    //   gameBoard[cell].innerHTML = oToken;
-    //   gameBoard[cell].className = "filled";
-    //   checkEndGame();
-    // } else
     if (event.target.className === "cell"){
       //Place the token of the current player then switch the player
       if (currentPlayer === 1){
@@ -166,6 +145,7 @@ function placeToken(event){
         event.target.innerHTML = oToken;
       }
       event.target.className = "filled";
+      currentPlayer = 2;
       sendToServer();
     }
   }
