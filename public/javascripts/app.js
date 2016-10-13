@@ -30,14 +30,20 @@ socket.on("gameUpdate", function(data){
 function fillTokens(tokens){
   for (var i = 0; i < gameBoard.length; i++){
     if (tokens[i] === "X"){
-      gameBoard[i].innerHTML = xToken;
-      gameBoard[i].className = "filled";
+      if (gameBoard[i].innerHTML !== xToken){
+        gameBoard[i].innerHTML = xToken;
+        gameBoard[i].className = "filled";
+      }
     } else if (tokens[i] === "O"){
-      gameBoard[i].innerHTML = oToken;
-      gameBoard[i].className = "filled";
+      if (gameBoard[i].innerHTML !== oToken){
+        gameBoard[i].innerHTML = oToken;
+        gameBoard[i].className = "filled";
+      }
     } else {
-      gameBoard[i].innerHTML = "";
-      gameBoard[i].className = "cell";
+      if (gameBoard[i].innerHTML !== ""){
+        gameBoard[i].innerHTML = "";
+        gameBoard[i].className = "cell";
+      }
     }
   }
 }
