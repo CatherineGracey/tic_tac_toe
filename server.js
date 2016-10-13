@@ -5,9 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -28,8 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/sockets', routes);
-// app.use('/users', users);
+var game = require('./routes/game');
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -37,8 +33,8 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
   socket.on("gameUpdate", function(data){
-    console.log("gameUpdate", data);
-    io.emit("gameUpdate", data);
+    var updatedGame = game.processGame(data);
+    io.emit("gameUpdate", updatedGame);
   });
 });
 

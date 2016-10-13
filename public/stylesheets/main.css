@@ -46,7 +46,7 @@ h1 {
   margin: 1rem;
 }
 
-.scores {
+#result {
   display: none;
 }
 
