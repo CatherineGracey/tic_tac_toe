@@ -17,7 +17,11 @@ var lines = [
   [0,4,8],
   [2,4,6]
 ];
+
+//Seerver connectivity functions.
+
 var socket = io();
+
 socket.on("gameUpdate", function(data){
   console.log("gameUpdate received:", data);
   console.log(currentPlayer);
@@ -26,6 +30,21 @@ socket.on("gameUpdate", function(data){
   console.log(currentPlayer);
   checkEndGame();
 });
+
+function sendToServer(){
+  var tokens = getValues();
+  for (var i = 0; i < tokens.length; i++){
+    if (tokens[i] === xToken){
+      tokens[i] = "X";
+    } else if (tokens[i] === oToken){
+      tokens[i] = "O";
+    }
+  }
+  socket.emit("gameUpdate", {tokens: tokens, currentPlayer: currentPlayer});
+  console.log(currentPlayer);
+}
+
+//Display functions
 
 function fillTokens(tokens){
   for (var i = 0; i < gameBoard.length; i++){
@@ -48,19 +67,6 @@ function fillTokens(tokens){
   }
 }
 
-function sendToServer(){
-  var tokens = getValues();
-  for (var i = 0; i < tokens.length; i++){
-    if (tokens[i] === xToken){
-      tokens[i] = "X";
-    } else if (tokens[i] === oToken){
-      tokens[i] = "O";
-    }
-  }
-  socket.emit("gameUpdate", {tokens: tokens, currentPlayer: currentPlayer});
-  console.log(currentPlayer);
-}
-
 function endGame(result){
   inPlay = false;
   document.getElementById("result").style.display = "block";
@@ -76,10 +82,34 @@ function endGame(result){
   } else {
     text = "Everyone lives to fight another day.";
   }
-  var resultText = document.getElementById("result-text").innerHTML = text;
+  document.getElementById("result-text").innerHTML = text;
   document.getElementById("player-one").innerHTML = scores[0];
   document.getElementById("player-two").innerHTML = scores[1];
 }
+
+function showWinningLine(one, two, three){
+  gameBoard[one].className = "win";
+  gameBoard[two].className = "win";
+  gameBoard[three].className = "win";
+}
+
+function resetBoard(){
+  fillTokens(["", "", "", "", "", "", "", "", ""]);
+  inPlay = true;
+  document.getElementById("result").style.display = "hidden";
+  sendToServer();
+}
+
+window.onload = function(){
+  //Get the game board
+  gameBoard = document.getElementById("board");
+  gameBoard.addEventListener("click", placeToken);
+  //Assign cells to global variable
+  gameBoard = gameBoard.children;
+  document.getElementsByTagName("button")[0].addEventListener("click", resetBoard);
+};
+
+//Gameplay functions
 
 function isBoardFull(){
   for (var i = 0; i < gameBoard.length; i++){
@@ -94,20 +124,18 @@ function isThereAWinner(){
   var tokens = getValues();
   function checkLine(one, two, three){
     if (tokens[one] && tokens[one] === tokens[two] && tokens[one] === tokens[three]){
-      gameBoard[one].className = "win";
-      gameBoard[two].className = "win";
-      gameBoard[three].className = "win";
+      showWinningLine(one, two, three);
       return tokens[one];
     } else {
       return false;
     }
   }
-  for (i = 0; i < lines.length; i++){
+  for (var i = 0; i < lines.length; i++){
     var result = checkLine(lines[i][0], lines[i][1], lines[i][2]);
     if (result){
-      if (result === xToken){
+      if (result === xToken){//Player One wins
         scores[0]++;
-      } else {
+      } else {//Player Two wins
         scores[1]++;
       }
       return result;
@@ -119,13 +147,14 @@ function isThereAWinner(){
 function checkEndGame(){
   //Check end game condition
   var win = isThereAWinner();
-  if (win){
+  if (win){//Game has been won, so show winning end message.
     endGame(win);
     return true;
-  } else if (isBoardFull()) {
+  } else if (isBoardFull()) {//Game has tied, so show tie end message.
     endGame(false);
     return true;
   }
+  //Game is stil in progres.
   return false;
 }
 
@@ -156,19 +185,3 @@ function placeToken(event){
     }
   }
 }
-
-function resetBoard(){
-  fillTokens(["", "", "", "", "", "", "", "", ""]);
-  inPlay = true;
-  document.getElementById("result").style.display = "hidden";
-  sendToServer();
-}
-
-window.onload = function(){
-  //Get the game board
-  gameBoard = document.getElementById("board");
-  gameBoard.addEventListener("click", placeToken);
-  //Assign cells to global variable
-  gameBoard = gameBoard.children;
-  document.getElementsByTagName("button")[0].addEventListener("click", resetBoard);
-};
