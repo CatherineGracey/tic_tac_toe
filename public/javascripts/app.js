@@ -17,6 +17,22 @@ var lines = [
   [0,4,8],
   [2,4,6]
 ];
+var socket = io();
+socket.on("gameUpdate", function(data){
+  console.log("gameUpdate received:", data);
+});
+
+function sendToServer(){
+  var tokens = getValues();
+  for (var i = 0; i < tokens.length; i++){
+    if (tokens[i] === xToken){
+      tokens[i] = "X";
+    } else if (tokens[i] === oToken){
+      tokens[i] = "O";
+    }
+  }
+  socket.emit("gameUpdate", tokens);
+}
 
 function getPlayers(event){
   inPlay = true;
@@ -25,6 +41,7 @@ function getPlayers(event){
   } else {
     playBot = false;
   }
+  sendToServer();
   document.getElementById("select-players").style.display = "none";
   document.getElementsByClassName("scores")[0].style.display = "block";
 }
@@ -47,7 +64,7 @@ function endGame(result){
       text = "Player Two has slain Player One.";
     }
   } else {
-    text = "Everyone lives to fight another day."
+    text = "Everyone lives to fight another day.";
   }
   var resultText = document.createTextNode(text);
   resultDiv.appendChild(resultText);
@@ -86,7 +103,7 @@ function isThereAWinner(){
     var result = checkLine(lines[i][0], lines[i][1], lines[i][2]);
     if (result){
       if (result === xToken){
-        scores[0]++
+        scores[0]++;
       } else {
         scores[1]++;
       }
@@ -97,6 +114,7 @@ function isThereAWinner(){
 }
 
 function checkEndGame(){
+  sendToServer();
   //Check end game condition
   var win = isThereAWinner();
   if (win){
