@@ -23,17 +23,15 @@ var lines = [
 var socket = io();
 
 socket.on("gameUpdate", function(data){
-  console.log("gameUpdate received:", data);
-  console.log(currentPlayer);
   currentPlayer = data.currentPlayer;
   fillTokens(data.tokens);
-  console.log(currentPlayer);
   checkEndGame();
 });
 
 function sendToServer(){
   var tokens = getValues();
   for (var i = 0; i < tokens.length; i++){
+    //Strip styling out of tokens before sending to the server.
     if (tokens[i] === xToken){
       tokens[i] = "X";
     } else if (tokens[i] === oToken){
@@ -41,7 +39,6 @@ function sendToServer(){
     }
   }
   socket.emit("gameUpdate", {tokens: tokens, currentPlayer: currentPlayer});
-  console.log(currentPlayer);
 }
 
 //Display functions
