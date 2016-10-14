@@ -85,9 +85,11 @@ function endGame(result){
 }
 
 function showWinningLine(one, two, three){
-  gameBoard[one].className = "win";
-  gameBoard[two].className = "win";
-  gameBoard[three].className = "win";
+  setTimeout(function(){
+    gameBoard[one].className = "win";
+    gameBoard[two].className = "win";
+    gameBoard[three].className = "win";
+  }, 100);
 }
 
 function resetBoard(){

@@ -107,6 +107,11 @@ img {
   border-color: #57a957;
 }
 
+.win img {
+  transform: rotate(360deg);
+  transition: transform 1s;
+}
+
 @keyframes placeToken {
   from {
     max-height: 0;
